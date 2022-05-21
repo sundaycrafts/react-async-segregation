@@ -1,0 +1,48 @@
+{
+  "name": "react-async-segregation",
+  "version": "0.1.0",
+  "description": "encourage side-effects segregation for React component",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "engines": {
+    "node": "^16"
+  },
+  "scripts": {
+    "build": "rimraf dist && swc src --out-dir=dist --source-maps=false & tsc",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sundaycrafts/react-with-async-props.git"
+  },
+  "keywords": [
+    "react",
+    "Next.js"
+  ],
+  "author": "sundaycrafts",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sundaycrafts/react-with-async-props/issues"
+  },
+  "homepage": "https://github.com/sundaycrafts/react-with-async-props#readme",
+  "peerDependencies": {
+    "react": "18.x || 17.x",
+    "typescript": "^4.1"
+  },
+  "devDependencies": {
+    "@swc/cli": "^0.1.57",
+    "@swc/core": "^1.2.187",
+    "@swc/jest": "^0.2.21",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.2.0",
+    "@tsconfig/node16": "^1.0.2",
+    "@types/jest": "^27.5.1",
+    "@types/react": "^18.0.9",
+    "jest": "^28.1.0",
+    "jest-environment-jsdom": "^28.1.0",
+    "prettier": "^2.6.2",
+    "react": "^18.1.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.6.4"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json.schemastore.org/swcrc",
+  "module": {
+    "type": "commonjs"
+  },
+  "exclude": [
+    ".*spec.tsx?$",
+    "__fixtures__/"
+  ],
+  "jsc": {
+    "target": "es2022",
+    "transform": {
+      "react": {
+        "runtime": "automatic"
+      }
+    }
+  }
+}
