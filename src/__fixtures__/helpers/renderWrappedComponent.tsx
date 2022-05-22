@@ -1,4 +1,4 @@
-import { AsyncClient, withAsyncSegregation } from "../../index";
+import { AsyncClient, withAsyncSegregation } from "../../withAsyncSegregation";
 import { MyComponent, MyComponentProps } from "../MyComponent";
 import { render } from "@testing-library/react";
 

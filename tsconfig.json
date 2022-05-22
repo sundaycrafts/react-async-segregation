@@ -7,6 +7,6 @@
     "outDir": "dist"
   },
   "files": [
-    "src/index.tsx"
+    "src/withAsyncSegregation.ts"
   ]
 }
