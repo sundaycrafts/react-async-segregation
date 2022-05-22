@@ -1,9 +1,9 @@
 {
   "name": "react-async-segregation",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "encourage side-effects segregation for React component",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "engines": {
     "node": "^16"
   },
@@ -11,6 +11,9 @@
     "build": "rimraf dist && swc src --out-dir=dist --source-maps=false & tsc",
     "test": "jest"
   },
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sundaycrafts/react-with-async-props.git"
@@ -35,6 +38,7 @@
     "@swc/jest": "^0.2.21",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
+    "@testing-library/user-event": "^14.2.0",
     "@tsconfig/node16": "^1.0.2",
     "@types/jest": "^27.5.1",
     "@types/react": "^18.0.9",
