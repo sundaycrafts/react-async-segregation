@@ -79,9 +79,9 @@ const useAsyncHook: AsyncHook<MyProps> = (initialState) => {
   const { data, error } = useFetch('/api/data')
   
   if (error) {
-    setState((current) => ({...current, loading: false, error: true}))
+    return {...initialState, loading: false, error: true}
   } else if (data) {
-    setState((current) => ({...current, ...data, loading: false}))
+    return {...initialState, ...data, loading: false}
   } else {
     return initialState
   }
