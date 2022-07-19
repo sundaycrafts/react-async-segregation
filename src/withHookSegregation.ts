@@ -9,7 +9,5 @@ export function withHookSegregation<Props>(
   initialProps: Props,
   useAsyncHook: AsyncHook<Props>
 ): FC {
-  return () => {
-    return Component(useAsyncHook(initialProps));
-  };
+  return () => Component(useAsyncHook(initialProps));
 }
