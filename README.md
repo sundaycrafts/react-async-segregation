@@ -1,4 +1,4 @@
-Encourage side effects segregation for React component
+Encourage side effects segregation to make testing easier for React components
 
 # `withAsyncSegregation`
 
@@ -29,28 +29,9 @@ const MyComponentWithSideEffects = withAsyncSegregation(MyComponent, {loading: t
 export default MyComponentWithSideEffects;
 ```
 
-# `withContextSegregation`
-
-```tsx
-import {createContext, useContext} from "react";
-import {withContextSegregation, CurriedUseContext} from "react-async-segregation";
-
-type MyProps = {
-    name: string;
-}
-
-export const MyComponent: FC<MyProps> = ({name}) => {
-    return <h1>Hello {name}</h1>;
-};
-
-export const MyContext = createContext<MyProps>({name: ""});
-const curriedContext: CurriedUseContext<MyProps> = () => useContext(MyContext);
-
-const MyComponentWithSideEffects = withContextSegregation(MyComponent, curriedContext);
-export default MyComponentWithSideEffects;
-```
-
 # `withHookSegregation`
+
+Segregate [React hooks](https://reactjs.org/docs/hooks-intro.html) such as [useContext](https://reactjs.org/docs/hooks-reference.html#usecontext), [SWR](https://swr.vercel.app/) which (potentially) contains side-effects.
 
 ```tsx
 import {FC} from "react";

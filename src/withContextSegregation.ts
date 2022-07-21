@@ -20,5 +20,6 @@ export function withContextSegregation<Props>(
   Component: FC<Props>,
   useContexts: CurriedUseContext<Props>
 ): FC {
+  console.warn("this package is deprecated, use withHookSegregation instead");
   return () => Component(useContexts());
 }
