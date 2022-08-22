@@ -21,7 +21,13 @@
   "keywords": [
     "react",
     "container component",
-    "humble object"
+    "humble object",
+    "HOC",
+    "high ordered component",
+    "IoC",
+    "inversion of control",
+    "DI container",
+    "dependency injection"
   ],
   "author": "sundaycrafts",
   "license": "MIT",
