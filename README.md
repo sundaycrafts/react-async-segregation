@@ -63,6 +63,9 @@ const OtherComponent = () => (
 
 # `withAsyncSegregation`
 
+This HOC injects asynchronous function to prepare the initial data from remote hosts.
+You can keep the component pure and test the function without React.
+
 ```tsx
 import { FC } from "react";
 import { withAsyncSegregation, AsyncClient } from "react-async-segregation";
@@ -80,7 +83,7 @@ export const MyComponent: FC<MyProps> = ({ loading }) => {
   return <div>Content</div>;
 };
 
-const asyncClient: AsyncClient<MyProps> = async (setState) => {
+export const asyncClient: AsyncClient<MyProps> = async (setState) => {
   fetch('/api/data')
     .then(res => res.json())
     .then((data: Partial<MyProps>) => setState((current) => ({ ...current, ...data, loading: false })));
@@ -90,11 +93,30 @@ const MyComponentWithSideEffects = withAsyncSegregation(MyComponent, { loading: 
 export default MyComponentWithSideEffects;
 ```
 
+You can also leave spaces for the props to populate for caller components.
+
+```tsx
+type MyProps = {
+  loading: boolean
+  /* other props... */
+}
+
+const MyComponentWithSideEffects = withAsyncSegregation(MyComponent, {/* omit loading */}, asyncClient);
+export default MyComponentWithSideEffects;
+
+// in other file
+import MyComponentWithSideEffects from "./MyComponent";
+
+const OtherComponent = () => (
+  <MyComponentWithSideEffects loading={false} />
+);
+```
+
 # `withHookSegregation`
 
 This HOC segregates [React hooks](https://reactjs.org/docs/hooks-intro.html) such
-as [useContext](https://reactjs.org/docs/hooks-reference.html#usecontext), [SWR](https://swr.vercel.app/) which (
-potentially) contains side-effects.
+as [useContext](https://reactjs.org/docs/hooks-reference.html#usecontext), [SWR](https://swr.vercel.app/) which
+(potentially) contains side-effects.
 
 ```tsx
 import { FC } from "react";
@@ -134,3 +156,22 @@ const useAsyncHook: AsyncHook<MyProps> = (initialState) => {
 const MyComponentWithSideEffects = withHookSegregation(MyComponent, { loading: true, error: false }, useAsyncHook);
 export default MyComponentWithSideEffects;
 ```
+
+You can also leave spaces for the props to populate for caller components.
+
+```tsx
+type MyProps = {
+  loading: boolean;
+  error: boolean;
+  /* other props... */
+}
+
+const MyComponentWithSideEffects = withHookSegregation(MyComponent, { error: false, /* omit loading */ }, useAsyncHook);
+export default MyComponentWithSideEffects;
+
+// in other file
+import MyComponentWithSideEffects from "./MyComponent";
+
+const OtherComponent = () => (
+  <MyComponentWithSideEffects loading={false} />
+);
