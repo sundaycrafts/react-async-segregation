@@ -4,14 +4,13 @@ export type AsyncClient<Props> = (
   setState: Dispatch<SetStateAction<Props>>
 ) => void | Promise<void>;
 
-export function withAsyncSegregation<Props,
-  CurriedFields extends keyof Props = keyof Props>(
+export function withAsyncSegregation<Props>(
   Component: FC<Props>,
-  curriedProps: Pick<Props, CurriedFields>,
+  initialProps: Props,
   asyncClient: AsyncClient<Props>
-): FC<Omit<Props, CurriedFields>> {
-  return (props: Omit<Props, CurriedFields>) => {
-    const [s, ss] = useState<Props>({ ...curriedProps, ...props } as Props);
+): FC {
+  return () => {
+    const [s, ss] = useState<Props>(initialProps);
     useEffect(() => {
       asyncClient(ss);
     }, [ss]);
