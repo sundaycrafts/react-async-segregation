@@ -93,25 +93,6 @@ const MyComponentWithSideEffects = withAsyncSegregation(MyComponent, { loading: 
 export default MyComponentWithSideEffects;
 ```
 
-You can also leave spaces for the props to populate for caller components.
-
-```tsx
-type MyProps = {
-  loading: boolean
-  /* other props... */
-}
-
-const MyComponentWithSideEffects = withAsyncSegregation(MyComponent, {/* omit loading */}, asyncClient);
-export default MyComponentWithSideEffects;
-
-// in other file
-import MyComponentWithSideEffects from "./MyComponent";
-
-const OtherComponent = () => (
-  <MyComponentWithSideEffects loading={false} />
-);
-```
-
 # `withHookSegregation`
 
 This HOC segregates [React hooks](https://reactjs.org/docs/hooks-intro.html) such
@@ -156,22 +137,3 @@ const useAsyncHook: AsyncHook<MyProps> = (initialState) => {
 const MyComponentWithSideEffects = withHookSegregation(MyComponent, { loading: true, error: false }, useAsyncHook);
 export default MyComponentWithSideEffects;
 ```
-
-You can also leave spaces for the props to populate for caller components.
-
-```tsx
-type MyProps = {
-  loading: boolean;
-  error: boolean;
-  /* other props... */
-}
-
-const MyComponentWithSideEffects = withHookSegregation(MyComponent, { error: false, /* omit loading */ }, useAsyncHook);
-export default MyComponentWithSideEffects;
-
-// in other file
-import MyComponentWithSideEffects from "./MyComponent";
-
-const OtherComponent = () => (
-  <MyComponentWithSideEffects loading={false} />
-);
