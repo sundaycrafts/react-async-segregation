@@ -1,15 +1,13 @@
 import { FC } from "react";
 
 export type AsyncHook<Props> = (
-  props: Props
+  currentState: Props
 ) => Props;
 
-export function withHookSegregation<Props,
-  CurriedFields extends keyof Props = keyof Props>(
+export function withHookSegregation<Props>(
   Component: FC<Props>,
-  curriedProps: Pick<Props, CurriedFields>,
+  initialProps: Props,
   useAsyncHook: AsyncHook<Props>
-): FC<Omit<Props, CurriedFields>> {
-  return (props: Omit<Props, CurriedFields>) =>
-    Component(useAsyncHook({ ...curriedProps, ...props } as Props));
+): FC {
+  return () => Component(useAsyncHook(initialProps));
 }
