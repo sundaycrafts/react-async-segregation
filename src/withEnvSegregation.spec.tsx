@@ -1,6 +1,6 @@
 import { withEnvSegregation } from "./withEnvSegregation";
 import { MultiPropsComponent, MultiPropsComponentProps } from "./__fixtures__/MultiPropsComponent";
-import { render } from "@testing-library/react";
+import { screen, render } from "@testing-library/react";
 
 it("returns a new component", () => {
   // does not throw error
@@ -36,4 +36,51 @@ it("specifies curried props by Generics", () => {
     development: defaultProps,
     production: defaultProps
   });
+});
+
+it("uses custom environment when it is given", async () => {
+  const CUSTOM_ENV = "production";
+
+  const Configured = withEnvSegregation(MultiPropsComponent, {
+    test: null as any,
+    development: null as any,
+    production: {
+      loading: false,
+      label: "default"
+    }
+  }, CUSTOM_ENV);
+
+  render(<Configured />);
+
+  expect(await screen.findByText("default")).toBeInTheDocument();
+});
+
+it("uses development props when given no environment", async () => {
+  const Configured = withEnvSegregation(MultiPropsComponent, {
+    test: null as any,
+    development: {
+      loading: false,
+      label: "default"
+    },
+    production: null as any
+  }, null as any);
+
+  render(<Configured />);
+
+  expect(await screen.findByText("default")).toBeInTheDocument();
+});
+
+it("uses development props when given unexpected environment", async () => {
+  const Configured = withEnvSegregation(MultiPropsComponent, {
+    test: null as any,
+    development: {
+      loading: false,
+      label: "default"
+    },
+    production: null as any
+  }, "unexpected" as any);
+
+  render(<Configured />);
+
+  expect(await screen.findByText("default")).toBeInTheDocument();
 });

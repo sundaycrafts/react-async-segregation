@@ -5,6 +5,8 @@ Encourage side effects segregation to make testing easier for React components
 This HOC injects dependencies for each environment.
 This is useful for building a testable component which is referred from others.
 
+It uses `development` props as a default in case `NODE_ENV` is not given or given an unexpected value for some reason.
+
 ```tsx
 import { FC } from "react";
 import { withEnvSegregation } from "react-async-segregation";

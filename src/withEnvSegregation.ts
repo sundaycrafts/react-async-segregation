@@ -7,11 +7,11 @@ export function withEnvSegregation<Props,
   Component: FC<Props>,
   curriedProps: Record<NODE_ENV,
     Pick<Props, CurriedFields>>,
-  env: NODE_ENV = (process.env.NODE_ENV || "development") as NODE_ENV
+  env: undefined | NODE_ENV = process.env.NODE_ENV as NODE_ENV
 ): FC<Omit<Props, CurriedFields>> {
   return (p: Omit<Props, CurriedFields>) =>
     Component({
-      ...curriedProps[env],
+      ...curriedProps[env as NODE_ENV] || curriedProps["development"],
       ...p
     } as Props);
 }
