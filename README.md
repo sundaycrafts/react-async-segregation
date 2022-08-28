@@ -1,3 +1,5 @@
+[![npm](https://img.shields.io/npm/v/react-async-segregation)](https://npmjs.com/package/react-async-segregation)
+
 Encourage side effects segregation to make testing easier for React components
 
 # `withEnvSegregation`
