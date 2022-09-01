@@ -10,6 +10,9 @@ export function withAsyncSegregation<Props>(
   asyncClient: AsyncClient<Props>
 ): FC {
   return () => {
+    console.warn(
+      "withAsyncSegregation is deprecated. use withHookSegregation with react-async-hook or swr instead"
+    );
     const [s, ss] = useState<Props>(initialProps);
     useEffect(() => {
       asyncClient(ss);
