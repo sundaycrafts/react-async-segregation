@@ -2,6 +2,33 @@
 
 Encourage side effects segregation to make testing easier for React components
 
+# `withHookSegregation`
+
+This HOC injects initial rendering data from asynchronous [React hooks](https://reactjs.org/docs/hooks-intro.html) such
+as [useContext](https://reactjs.org/docs/hooks-reference.html#usecontext), [SWR](https://swr.vercel.app/).
+
+You can keep the component pure with this HOC to easy to test.
+
+```tsx
+import { withHookSegregation } from "react-async-segregation";
+
+export function MyComponent(props: {
+  name: string;
+  country: string;
+  age: number;
+  useFetcher: () => { data: any; error: Error; }
+}) {/* ...*/}
+
+const staticProps = { country: "Neverland", useFetcher: () => {/*...*/} };
+export default withHookSegregation(MyComponent, staticProps, () => {
+  // ... call more asynchronous hooks here ...
+  return {
+    data: { name: "Alice", age: 18 },
+    error: undefined
+  }
+});
+```
+
 # `withEnvSegregation`
 
 This HOC injects dependencies for each environment.
@@ -43,72 +70,4 @@ import ConfiguredMyComponent from "./MyComponent";
 const OtherComponent = () => (
   <ConfiguredMyComponent>Content</ConfiguredMyComponent>
 );
-```
-
-# `withAsyncSegregation`
-
-This HOC injects asynchronous function to prepare the initial data from remote hosts.
-You can keep the component pure and test the function without React.
-
-```tsx
-/* ... */
-import { withAsyncSegregation, AsyncClient } from "react-async-segregation";
-
-type MyProps = {
-  loading: boolean;
-  error: boolean;
-}
-
-export const MyComponent: FC<MyProps> = ({ loading }) => {/* ...*/};
-
-export const asyncClient: AsyncClient<MyProps> = async (setState) => {
-  let data: Partial<MyProps>;
-  
-  try {
-    const res = await fetch('/api/data');
-    const data = await res.json();
-  } catch {
-    setState((current) => ({...current, error: true}));
-  }
-  
-  setState((current) => ({ ...current, ...data, loading: false }));
-}
-
-const defaultState = { loading: true, error: false };
-const MyComponentWithSideEffects = withAsyncSegregation(MyComponent, defaultState, asyncClient);
-export default MyComponentWithSideEffects;
-```
-
-# `withHookSegregation`
-
-This HOC segregates [React hooks](https://reactjs.org/docs/hooks-intro.html) such
-as [useContext](https://reactjs.org/docs/hooks-reference.html#usecontext), [SWR](https://swr.vercel.app/) which
-(potentially) contains side-effects.
-
-```tsx
-/* ... */
-import { withHookSegregation, AsyncHook } from "react-async-segregation";
-
-type MyProps = {
-  loading: boolean;
-  error: boolean;
-}
-
-export const MyComponent: FC<MyProps> = ({ loading, error }) => {/* ...*/};
-
-const useAsyncHook: AsyncHook<MyProps> = (initialState) => {
-  const [data, error] = useFetch('/api/data');
-
-  if (error) {
-    return { ...initialState, loading: false, error: true };
-  } else if (data) {
-    return { ...initialState, ...data, loading: false };
-  } else {
-    return initialState;
-  }
-}
-
-const defaultState = { loading: true, error: false };
-const MyComponentWithSideEffects = withHookSegregation(MyComponent, defaultState, useAsyncHook);
-export default MyComponentWithSideEffects;
 ```
