@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import { withHookSegregation } from "./withHookSegregation";
+import { AsyncHook, withHookSegregation } from "./withHookSegregation";
 import { useState } from "react";
+import { MyComponentProps } from "./__fixtures__/MyComponent";
 
 function MyComponent(props: { name: string; country: string; age: number }) {
   return (

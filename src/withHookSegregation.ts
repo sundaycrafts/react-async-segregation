@@ -3,7 +3,7 @@ import { getDisplayName } from "./util/get-display-name";
 
 export type AsyncHook<
   Props,
-  StaticPropsKeys extends keyof Props = keyof Props
+  StaticPropsKeys extends keyof Props = never
 > = () => {
   data?: { [P in Exclude<keyof Props, StaticPropsKeys>]: Props[P] };
   error?: Error;
