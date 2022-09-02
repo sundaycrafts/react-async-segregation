@@ -2,12 +2,12 @@
 
 Encourage side effects segregation to make testing easier for React components
 
-# `withHookSegregation`
+# Usage
 
 This HOC injects initial rendering data from asynchronous [React hooks](https://reactjs.org/docs/hooks-intro.html) such
 as [useContext](https://reactjs.org/docs/hooks-reference.html#usecontext), [SWR](https://swr.vercel.app/).
 
-You can keep the component pure with this HOC to easy to test.
+You can keep the component pure with this HOC to make it easy to test.
 
 ```tsx
 import { withHookSegregation } from "react-async-segregation";
@@ -24,50 +24,43 @@ export default withHookSegregation(MyComponent, staticProps, () => {
   // ... call more asynchronous hooks here ...
   return {
     data: { name: "Alice", age: 18 },
-    error: undefined // withHookSegregation simpliy throws this if it's given
+    error: undefined // withHookSegregation simply throws this if it's given
   }
 }, /* (option) LoadingComponent */);
 ```
 
-# `withEnvSegregation`
+# Utilities
 
-This HOC injects dependencies for each environment.
-This is useful for building a testable component which is called from others.
+## `withEnv`
 
-It uses `development` props as a default in case `NODE_ENV` is not given or given an unexpected value for some reason.
+It allows you to switch dependencies by environment variables.
+It is useful for building a testable component that is called by others.
+
+Its precedence order of entries is corresponding env > `development` > `default`.
 
 ```tsx
-/* ... */
-import { withEnvSegregation } from "react-async-segregation";
+//...
+import { withEnv } from 'react-async-segregation/util'
 
-type HooksTuple = [data?: string, error?: Error];
+const Frame = (props: {
+  children: string,
+  remoteData: any,
+  useFetchData: () => {data: any; error: Error }
+}) => {/* ... */}
 
-type MyProps = {
-  useAsync: () => HooksTuple;
-  children: ReactNode;
-};
-
-export const MyComponent: FC<MyProps> = (props) => {/* ...*/};
-
-const stubHook = () => ["data", undefined] as HooksTuple;
-
-const ConfiguredMyComponent = withEnvSegregation(
-  MyComponent,
+const ConfiguredFrame = (children: string) => withHookSegregation(
+  Frame,
   {
-    production: { useAsync: useSideEffect },
-    development: { useAsync: useSideEffect },
-    test: { useAsync: stubHook },
+    children,
+    useFetchData: () => {/* ... */}
   },
-  /* option: you can pass custom environment variable here */
-  // process.env.MY_ENV as "development" | "production" | "test"
-);
+  withEnv({
+    test: () => ({data: { remoteData: "remote data" }}),
+    default: asyncHook,
+  }))
 
-export default ConfiguredMyComponent;
+export default ConfiguredFrame
 
-/* === in other file === */
-import ConfiguredMyComponent from "./MyComponent";
-
-const OtherComponent = () => (
-  <ConfiguredMyComponent>Content</ConfiguredMyComponent>
-);
+// Page.tsx
+const Page = () => (<ConfiguredFrame>Hello World!</ConfiguredFrame>)
 ```
