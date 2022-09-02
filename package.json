@@ -1,18 +1,18 @@
 {
   "name": "react-async-segregation",
-  "version": "0.7.0-beta.6",
+  "version": "0.7.0-beta.8",
   "description": "encourage side-effects segregation for React component",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "engines": {
     "node": "^16"
   },
   "scripts": {
-    "build": "rimraf dist && swc src --out-dir=dist --source-maps=false & tsc",
-    "test": "jest"
+    "build": "rimraf dist && swc src --out-dir=dist --source-maps=false & tsc && cp package.json README.md LICENSE dist",
+    "test": "jest",
+    "dist": "npm run build && cd dist && npm publish"
   },
   "files": [
-    "dist"
+    "**/*.js",
+    "**/*.d.ts"
   ],
   "repository": {
     "type": "git",
