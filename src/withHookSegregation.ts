@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { getDisplayName } from "./util";
+import { getDisplayName } from "./util/get-display-name";
 
 export type AsyncHook<
   Props,

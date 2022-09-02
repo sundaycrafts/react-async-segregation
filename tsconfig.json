@@ -8,7 +8,6 @@
   },
   "files": [
     "src/index.ts",
-    "src/withContextSegregation.ts",
-    "src/withAsyncSegregation.ts"
+    "src/util/index.ts"
   ]
 }
