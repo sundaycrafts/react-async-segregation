@@ -48,7 +48,7 @@ const Frame = (props: {
   useFetchData: () => {data: any; error: Error }
 }) => {/* ... */}
 
-const ConfiguredFrame = (children: string) => withHookSegregation(
+const ConfiguredFrame = ({children}: {children: string}) => withHookSegregation(
   Frame,
   {
     children,
@@ -63,4 +63,15 @@ export default ConfiguredFrame
 
 // Page.tsx
 const Page = () => (<ConfiguredFrame>Hello World!</ConfiguredFrame>)
+```
+
+Or, if you want to just inject dependencies without fetching any data, you can do like this:
+
+```tsx
+// ...
+const ConfiguredFrame = ({children}: {children: string}) => Frame(withEnv({
+  test: { children, useFetchData: () => {/* ... */} },
+  default: { children, useFetchData: asyncHook },
+}))
+export default ConfiguredFrame
 ```
