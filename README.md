@@ -24,9 +24,9 @@ export default withHookSegregation(MyComponent, staticProps, () => {
   // ... call more asynchronous hooks here ...
   return {
     data: { name: "Alice", age: 18 },
-    error: undefined
+    error: undefined // withHookSegregation simpliy throws this if it's given
   }
-});
+}, /* (option) LoadingComponent */);
 ```
 
 # `withEnvSegregation`
