@@ -72,19 +72,20 @@ it("merge static props with async hook data", () => {
 it("works with withEnv", () => {
   const Wrapped = withHookSegregation(
     MyComponent,
+    { age: 10, country: "US" },
     withEnv({
-      test: { age: 10, country: "US" },
-      development: { age: 20, country: "US" },
-      production: { age: 30, country: "US" },
-    }),
-    () => ({
-      data: { name: "John" },
+      default: () => ({
+        data: { name: "John" },
+      }),
+      production: () => ({
+        data: { name: "Alice" },
+      }),
     })
   );
 
   render(<Wrapped />);
 
-  expect(screen.getByText(/10$/)).toBeInTheDocument();
+  expect(screen.getByText(/John$/)).toBeInTheDocument();
 });
 
 it("throws error when hook returns error field", () => {
