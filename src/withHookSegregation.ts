@@ -3,16 +3,18 @@ import { getDisplayName } from "./util/get-display-name";
 
 export type AsyncHook<
   Props,
-  StaticPropsKeys extends keyof Props = never
+  PickedFields extends keyof Props = keyof Props
 > = () => {
-  data?: { [P in Exclude<keyof Props, StaticPropsKeys>]: Props[P] };
+  data?: {
+    [P in Extract<keyof Props, PickedFields>]: Props[P];
+  };
   error?: Error;
 };
 
 export function withHookSegregation<Props, StaticPropsKeys extends keyof Props>(
   Component: FC<Props>,
   staticProps: { [P in StaticPropsKeys]: Props[P] },
-  asyncHook: AsyncHook<Props, StaticPropsKeys>,
+  asyncHook: AsyncHook<Props, Exclude<keyof Props, StaticPropsKeys>>,
   Loading: FC<{}> = () => null
 ): FC<{}> {
   const fn = () => {
