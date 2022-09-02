@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { withHookSegregation } from "./withHookSegregation";
 import { useState } from "react";
+import { withEnv } from "./util";
 
 function MyComponent(props: { name: string; country: string; age: number }) {
   return (
@@ -52,6 +53,38 @@ it("injects async hook state into the component", () => {
   render(<Wrapped />);
 
   expect(screen.getByText(/John$/)).toBeInTheDocument();
+});
+
+it("merge static props with async hook data", () => {
+  const Wrapped = withHookSegregation(
+    MyComponent,
+    { age: 30, country: "US" },
+    () => ({
+      data: { name: "John" },
+    })
+  );
+
+  render(<Wrapped />);
+
+  expect(screen.getByText(/John$/)).toBeInTheDocument();
+});
+
+it("works with withEnv", () => {
+  const Wrapped = withHookSegregation(
+    MyComponent,
+    withEnv({
+      test: { age: 10, country: "US" },
+      development: { age: 20, country: "US" },
+      production: { age: 30, country: "US" },
+    }),
+    () => ({
+      data: { name: "John" },
+    })
+  );
+
+  render(<Wrapped />);
+
+  expect(screen.getByText(/10$/)).toBeInTheDocument();
 });
 
 it("throws error when hook returns error field", () => {
