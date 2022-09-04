@@ -36,6 +36,9 @@ export default withHookSegregation(MyComponent, staticProps, () => {
 It allows you to switch dependencies by environment variables.
 It is useful for building a testable component that is called by others.
 
+It uses a `development` props by default in case `NODE_ENV` is not given or given an unexpected value for some reason.
+You can omit to give every environment field by adding a `default` field for default value.
+
 Its precedence order of entries is corresponding env > `development` > `default`.
 
 ```tsx
