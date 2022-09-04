@@ -11,7 +11,7 @@ export function withEnvSegregation<
   env: undefined | NODE_ENV = process.env.NODE_ENV as NODE_ENV
 ): FC<Omit<Props, CurriedFields>> {
   console.warn(
-    "withEnvSegregation is deprecated, use withHookSegregation with withEnv and just wrap it with high ordered function"
+    "withEnvSegregation is deprecated, use withEnv and wrap the component with high ordered function"
   );
   return (p: Omit<Props, CurriedFields>) =>
     Component({
