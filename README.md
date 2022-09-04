@@ -4,7 +4,7 @@ Encourage side effects segregation to make testing easier for React components
 
 # Usage
 
-This HOC injects initial rendering data from asynchronous [React hooks](https://reactjs.org/docs/hooks-intro.html) such
+`withHookSegregation` injects initial rendering data from asynchronous [React hooks](https://reactjs.org/docs/hooks-intro.html) such
 as [useContext](https://reactjs.org/docs/hooks-reference.html#usecontext), [SWR](https://swr.vercel.app/).
 
 You can keep the component pure with this HOC to make it easy to test.

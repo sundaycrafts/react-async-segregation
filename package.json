@@ -1,6 +1,6 @@
 {
   "name": "react-async-segregation",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "encourage side-effects segregation for React component",
   "engines": {
     "node": "^16"
