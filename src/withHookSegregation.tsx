@@ -21,9 +21,9 @@ export function withHookSegregation<Props, StaticPropsKeys extends keyof Props>(
     const { data, error } = asyncHook();
 
     if (error) throw error;
-    if (!data) return Loading({});
+    if (!data) return <Loading />;
 
-    return Component({ ...data, ...staticProps } as Props);
+    return <Component {...({ ...data, ...staticProps } as Props)} />;
   };
 
   fn.displayName = `WithHookSegregation${getDisplayName(Component)}`;
