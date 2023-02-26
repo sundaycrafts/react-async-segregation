@@ -1,6 +1,6 @@
 {
   "name": "react-async-segregation",
-  "version": "0.7.3",
+  "version": "0.8-alpha.1",
   "description": "encourage side-effects segregation for React component",
   "scripts": {
     "build": "rimraf dist && swc src --out-dir=dist --source-maps=false & tsc && cp package.json README.md LICENSE dist",
